@@ -62,14 +62,14 @@ export default function Main() {
     }
     function handleCopyModels() {
         setCopy(true);
+        setTimeout(() => {
+            setCopy(false);
+        }, 1000);
         if (stringData) {
             return navigator.clipboard.writeText(stringData);
         }
         const result = setString(defaultData);
         navigator.clipboard.writeText(result);
-        setTimeout(() => {
-            setCopy(false);
-        }, 1000);
     }
     useEffect(() => {
         if (!defaultData) return;
@@ -145,7 +145,7 @@ export default function Main() {
                             copy ? 'button-copied' : null
                         }`}
                     >
-                        {copy ? '✔': 'Copy models'}
+                        {copy ? '✔' : 'Copy models'}
                     </button>
                 ) : null}
                 <Table data={data} series={series} />
