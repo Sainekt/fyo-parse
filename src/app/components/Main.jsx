@@ -1,5 +1,4 @@
 'use client';
-import { sendError } from 'next/dist/server/api-utils';
 import Table from './Table';
 import { useState, useEffect } from 'react';
 export default function Main() {
@@ -10,8 +9,8 @@ export default function Main() {
     const [data, setData] = useState(null);
     const [stringData, setStringData] = useState(null);
     const [loader, setLoader] = useState(false);
-    const [error, setError] = useState(false);
     const [formError, setFormError] = useState(null);
+    const [copy, setCopy] = useState(false);
 
     async function handleSend(event) {
         event.preventDefault();
@@ -41,7 +40,6 @@ export default function Main() {
         if (status === 404) return setFormError(result.detail);
         setDefautData(result);
         setData(result);
-        setError(null);
     }
 
     function getString(object) {
@@ -63,11 +61,15 @@ export default function Main() {
         return sting;
     }
     function handleCopyModels() {
+        setCopy(true);
         if (stringData) {
             return navigator.clipboard.writeText(stringData);
         }
         const result = setString(defaultData);
         navigator.clipboard.writeText(result);
+        setTimeout(() => {
+            setCopy(false);
+        }, 1000);
     }
     useEffect(() => {
         if (!defaultData) return;
@@ -91,7 +93,6 @@ export default function Main() {
     return (
         <div className='grid-container'>
             <div className='card'>
-                <span className='error'>{error}</span>
                 <form className='form'>
                     <label htmlFor='url' className='label'>
                         URL:
@@ -140,9 +141,11 @@ export default function Main() {
                 {defaultData ? (
                     <button
                         onClick={handleCopyModels}
-                        className={`button button-copy`}
+                        className={`button button-copy ${
+                            copy ? 'button-copied' : null
+                        }`}
                     >
-                        Copy Models
+                        {copy ? '✔': 'Copy models'}
                     </button>
                 ) : null}
                 <Table data={data} series={series} />

@@ -81,6 +81,9 @@ body {
 .button-copy {
     background-color: #28A745;
 }
+.button-copied {
+    background-color: #166e2a;
+}
 
 .table-container {
     max-height: 300px; /* Максимальная высота контейнера */

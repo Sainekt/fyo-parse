@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { getData, parseData } from '../utils/puppeter';
 
 export async function POST(request) {
