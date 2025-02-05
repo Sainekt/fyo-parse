@@ -11,6 +11,7 @@ export default function Main() {
     const [loader, setLoader] = useState(false);
     const [formError, setFormError] = useState(null);
     const [copy, setCopy] = useState(false);
+    const [unique, setUnique] = useState(true);
 
     async function handleSend(event) {
         event.preventDefault();
@@ -73,22 +74,24 @@ export default function Main() {
     }
     useEffect(() => {
         if (!defaultData) return;
-        if (!limit) {
-            setStringData(null);
-            return setData(defaultData);
-        }
         const newData = [];
         let models = '';
+        const uniqueSet = new Set();
         for (const element of defaultData) {
+            if (unique) {
+                if (uniqueSet.has(element.model)) {
+                    continue;
+                }
+                uniqueSet.add(element.model);
+            }
             const newModel = getString(element);
-
-            if ((models + newModel).length > limit) break;
+            if (limit && (models + newModel).length > limit) break;
             models += newModel;
             newData.push(element);
         }
         setStringData(models);
         setData(newData);
-    }, [defaultData, limit, series]);
+    }, [defaultData, limit, series, unique]);
 
     return (
         <div className='grid-container'>
@@ -136,6 +139,15 @@ export default function Main() {
                     id='series'
                     type='checkbox'
                     onChange={(event) => setSeries(event.target.checked)}
+                />
+                <label htmlFor='unique' className='label'>
+                    Unique:
+                </label>
+                <input
+                    id='unique'
+                    type='checkbox'
+                    checked={unique}
+                    onChange={(event) => setUnique(event.target.checked)}
                 />
                 <br />
                 {defaultData ? (
