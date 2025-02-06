@@ -27,5 +27,6 @@ export async function parseData(data) {
         good['series'] = element[2];
         result.push(good);
     }
+    result.sort((a, b) => a.brand.localeCompare(b.brand));
     return result;
 }

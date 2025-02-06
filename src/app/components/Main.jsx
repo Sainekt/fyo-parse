@@ -72,10 +72,10 @@ export default function Main() {
             data += 'Список совместимых устройств (может быть не полным!):\n';
         if (stringData) {
             data += stringData;
-            return navigator.clipboard.writeText(data);
+            return navigator.clipboard.writeText(data.trimEnd());
         }
         data += setString(defaultData);
-        navigator.clipboard.writeText(data);
+        navigator.clipboard.writeText(data.trimEnd());
     }
     useEffect(() => {
         if (!defaultData) return;
