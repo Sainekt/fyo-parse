@@ -12,6 +12,7 @@ export default function Main() {
     const [formError, setFormError] = useState(null);
     const [copy, setCopy] = useState(false);
     const [unique, setUnique] = useState(true);
+    const [prefix, setPrefix] = useState(true);
 
     async function handleSend(event) {
         event.preventDefault();
@@ -62,15 +63,19 @@ export default function Main() {
         return sting;
     }
     function handleCopyModels() {
+        let data = '';
         setCopy(true);
         setTimeout(() => {
             setCopy(false);
         }, 1000);
+        if (prefix)
+            data += 'Список совместимых устройств (может быть не полным!):\n';
         if (stringData) {
-            return navigator.clipboard.writeText(stringData);
+            data += stringData;
+            return navigator.clipboard.writeText(data);
         }
-        const result = setString(defaultData);
-        navigator.clipboard.writeText(result);
+        data += setString(defaultData);
+        navigator.clipboard.writeText(data);
     }
     useEffect(() => {
         if (!defaultData) return;
@@ -148,6 +153,15 @@ export default function Main() {
                     type='checkbox'
                     checked={unique}
                     onChange={(event) => setUnique(event.target.checked)}
+                />
+                <label htmlFor='addPrefix' className='label'>
+                    Prefix model list:
+                </label>
+                <input
+                    id='addPrefix'
+                    type='checkbox'
+                    checked={prefix}
+                    onChange={(event) => setPrefix(event.target.checked)}
                 />
                 <br />
                 {defaultData ? (
