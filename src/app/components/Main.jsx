@@ -73,7 +73,7 @@ export default function Main() {
             setCopy(false);
         }, 1000);
         if (prefix)
-            data += 'Список совместимых устройств (может быть не полным!):\n';
+            data += '\nСписок совместимых устройств (может быть не полным!):\n';
         if (stringData) {
             data += stringData;
             return navigator.clipboard.writeText(data.trimEnd());
@@ -170,7 +170,10 @@ export default function Main() {
                 <br />
                 <p></p>
                 {viewForm ? (
-                    <Form formData={formData} setFormData={setFormData}></Form>
+                    <Form
+                        defaultData={defaultData}
+                        setFormData={setFormData}
+                    ></Form>
                 ) : null}
 
                 <p></p>

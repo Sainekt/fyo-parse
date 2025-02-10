@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function Form({ formData, setFormData }) {
+export default function Form({ defaultData, setFormData }) {
     const [name, setName] = useState('');
     const [annotation, setAnnotation] = useState('');
     const [brands, setBrands] = useState('');
@@ -32,6 +32,20 @@ export default function Form({ formData, setFormData }) {
         handleChanged();
     }, [name, annotation, brands, material, color, size]);
 
+    useEffect(() => {
+        if (defaultData) getBrands();
+        else setBrands('');
+    }, [defaultData]);
+
+    const getBrands = () => {
+        const brands = defaultData.reduce((curr, value) => {
+            curr[value.brand] = null;
+            return curr;
+        }, {});
+        const brandsList = Object.keys(brands).join(' ');
+        setBrands(brandsList);
+    };
+
     return (
         <>
             <label htmlFor='Name' className='label'>
@@ -61,6 +75,7 @@ export default function Form({ formData, setFormData }) {
                 type='input'
                 onChange={(event) => setBrands(event.target.value)}
                 className='input'
+                value={brands}
             />
 
             <div className='input-container'>
