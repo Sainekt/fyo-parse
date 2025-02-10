@@ -16,6 +16,7 @@ export default function Main() {
     const [prefix, setPrefix] = useState(true);
     const [viewForm, setViewForm] = useState(false);
     const [formData, setFormData] = useState('');
+    const [totalLength, setToralLength] = useState(0);
 
     async function handleSend(event) {
         event.preventDefault();
@@ -72,19 +73,24 @@ export default function Main() {
         setTimeout(() => {
             setCopy(false);
         }, 1000);
-        if (prefix)
-            data += '\nСписок совместимых устройств (может быть не полным!):\n';
         if (stringData) {
             data += stringData;
-            return navigator.clipboard.writeText(data.trimEnd());
+            return navigator.clipboard.writeText(data.trim());
         }
         data += setString(defaultData || []);
-        navigator.clipboard.writeText(data.trimEnd());
+        navigator.clipboard.writeText(data.trim());
     }
     useEffect(() => {
-        if (!defaultData) return;
+        if (!defaultData) {
+            setToralLength(formData.length);
+            return;
+        }
         const newData = [];
         let models = '';
+        if (prefix) {
+            models +=
+                '\nСписок совместимых устройств (может быть не полным!):\n';
+        }
         const uniqueSet = new Set();
         for (const element of defaultData) {
             if (unique) {
@@ -98,9 +104,11 @@ export default function Main() {
             models += newModel;
             newData.push(element);
         }
-        setStringData(models);
+        const data = models.trim();
+        setStringData(data);
+        setToralLength(data.length + formData.length);
         setData(newData);
-    }, [defaultData, limit, series, unique]);
+    }, [defaultData, limit, series, unique, prefix, formData]);
 
     return (
         <div className='grid-container'>
@@ -186,6 +194,7 @@ export default function Main() {
                     onChange={(event) => setLimit(event.target.value)}
                     className='input'
                 />
+                {totalLength ? `Total length: ${totalLength}` : null}
                 <button
                     onClick={handleCopyModels}
                     className={`button button-copy ${

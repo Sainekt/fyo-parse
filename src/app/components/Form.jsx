@@ -30,6 +30,7 @@ export default function Form({ defaultData, setFormData }) {
 
     useEffect(() => {
         handleChanged();
+        return () => setFormData('');
     }, [name, annotation, brands, material, color, size]);
 
     useEffect(() => {
