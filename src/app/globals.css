@@ -52,6 +52,19 @@ body {
     color: #000000;
     cursor: not-allowed;
 }
+.input-half {
+    flex: 1; /* Занимает равную долю доступного пространства */
+    margin-right: 10px; /* Отступ справа для разделения */
+}
+
+.input-half:last-child {
+    margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
+.input-container {
+    display: flex; /* Используем Flexbox для размещения полей ввода */
+    margin-bottom: 15px; /* Отступ снизу для контейнера */
+}
 .input-error {
     border-color: red; /* Цвет рамки при ошибке */
 }
@@ -132,3 +145,4 @@ th {
     justify-content: center; /* Центрируем по горизонтали */
     height: 100%; /* Занимаем всю высоту карточки */
 }
+

@@ -1,5 +1,6 @@
 'use client';
 import Table from './Table';
+import Form from './Form';
 import { useState, useEffect } from 'react';
 export default function Main() {
     const [url, setUrl] = useState(null);
@@ -13,6 +14,8 @@ export default function Main() {
     const [copy, setCopy] = useState(false);
     const [unique, setUnique] = useState(true);
     const [prefix, setPrefix] = useState(true);
+    const [viewForm, setViewForm] = useState(false);
+    const [formData, setFormData] = useState('');
 
     async function handleSend(event) {
         event.preventDefault();
@@ -64,6 +67,7 @@ export default function Main() {
     }
     function handleCopyModels() {
         let data = '';
+        if (formData) data = formData;
         setCopy(true);
         setTimeout(() => {
             setCopy(false);
@@ -74,7 +78,7 @@ export default function Main() {
             data += stringData;
             return navigator.clipboard.writeText(data.trimEnd());
         }
-        data += setString(defaultData);
+        data += setString(defaultData || []);
         navigator.clipboard.writeText(data.trimEnd());
     }
     useEffect(() => {
@@ -128,15 +132,6 @@ export default function Main() {
                         Request Models
                     </button>
                 </form>
-                <label htmlFor='limit' className='label'>
-                    Limit:
-                </label>
-                <input
-                    id='limit'
-                    type='number'
-                    onChange={(event) => setLimit(event.target.value)}
-                    className='input'
-                />
                 <label htmlFor='series' className='label'>
                     Series:
                 </label>
@@ -163,18 +158,41 @@ export default function Main() {
                     checked={prefix}
                     onChange={(event) => setPrefix(event.target.checked)}
                 />
+                <label htmlFor='viewForm' className='label'>
+                    View from
+                </label>
+                <input
+                    type='checkbox'
+                    id='viewForm'
+                    checked={viewForm}
+                    onChange={(event) => setViewForm(event.target.checked)}
+                />
                 <br />
-                {defaultData ? (
-                    <button
-                        onClick={handleCopyModels}
-                        className={`button button-copy ${
-                            copy ? 'button-copied' : null
-                        }`}
-                    >
-                        {copy ? '✔' : 'Copy models'}
-                    </button>
+                <p></p>
+                {viewForm ? (
+                    <Form formData={formData} setFormData={setFormData}></Form>
                 ) : null}
+
+                <p></p>
+                <label htmlFor='limit' className='label'>
+                    Limit:
+                </label>
+                <input
+                    id='limit'
+                    type='number'
+                    onChange={(event) => setLimit(event.target.value)}
+                    className='input'
+                />
+                <button
+                    onClick={handleCopyModels}
+                    className={`button button-copy ${
+                        copy ? 'button-copied' : null
+                    }`}
+                >
+                    {copy ? '✔' : 'Copy'}
+                </button>
                 <Table data={data} series={series} />
+                <p></p>
                 {loader ? (
                     <div className='loader-container'>
                         <span className='loader'></span>{' '}

@@ -1,4 +1,4 @@
-import { getData, parseData } from '../utils/puppeter';
+import { handler } from '../utils/puppeter';
 
 export async function POST(request) {
     const urlPattern =
@@ -16,8 +16,8 @@ export async function POST(request) {
     }
 
     try {
-        const fyoData = await getData(body.url);
-        if (fyoData === 404) {
+        const fyoData = await handler(body.url);
+        if (fyoData.status === 404) {
             return new Response(
                 JSON.stringify({ detail: 'Model list not found' }),
                 {
@@ -26,8 +26,13 @@ export async function POST(request) {
                 }
             );
         }
-        const result = await parseData(fyoData);
-        return new Response(JSON.stringify(result), {
+        if (fyoData.status === 400) {
+            return new Response(JSON.stringify({ detail: 'Unknown url' }), {
+                status: 400,
+                headers: HEADERS,
+            });
+        }
+        return new Response(JSON.stringify(fyoData.data), {
             headers: HEADERS,
             status: 200,
         });
