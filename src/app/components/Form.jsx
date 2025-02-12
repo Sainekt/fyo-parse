@@ -8,6 +8,7 @@ export default function Form({ defaultData, setFormData }) {
     const [material, setMaterial] = useState('');
     const [color, setColor] = useState('');
     const [size, setSize] = useState('');
+    const [parameters, setParameters] = useState('');
 
     const splitter = (text, inputSep = ' ', sep = ', ') => {
         return text.trimEnd().split(inputSep).join(sep);
@@ -23,15 +24,16 @@ export default function Form({ defaultData, setFormData }) {
         if (material) data += `Материал: ${splitter(material)}\n`;
         if (color) data += `Цвет: ${splitter(color)}\n`;
         if (size) {
-            data += `Размер: ${splitter(size)}\n\n`;
+            data += `Размер: ${size}\n`;
         }
+        if (parameters) data += `${parameters}\n`;
         setFormData(data);
     };
 
     useEffect(() => {
         handleChanged();
         return () => setFormData('');
-    }, [name, annotation, brands, material, color, size]);
+    }, [name, annotation, brands, material, color, size, parameters]);
 
     useEffect(() => {
         if (defaultData) getBrands();
@@ -115,6 +117,16 @@ export default function Form({ defaultData, setFormData }) {
                     />
                 </div>
             </div>
+            <label htmlFor='parameters' className='label'>
+                Parameters:
+            </label>
+            <textarea
+                className='input'
+                type='text'
+                id='parameters'
+                value={parameters}
+                onChange={(target) => setParameters(target.target.value)}
+            />
         </>
     );
 }

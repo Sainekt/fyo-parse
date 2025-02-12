@@ -81,10 +81,6 @@ export default function Main() {
         navigator.clipboard.writeText(data.trim());
     }
     useEffect(() => {
-        if (!defaultData) {
-            setToralLength(formData.length);
-            return;
-        }
         const newData = [];
         let models = '';
         if (prefix) {
@@ -92,19 +88,21 @@ export default function Main() {
                 '\nСписок совместимых устройств (может быть не полным!):\n';
         }
         const uniqueSet = new Set();
-        for (const element of defaultData) {
-            if (unique) {
-                if (uniqueSet.has(element.model)) {
-                    continue;
+        if (defaultData) {
+            for (const element of defaultData) {
+                if (unique) {
+                    if (uniqueSet.has(element.model)) {
+                        continue;
+                    }
+                    uniqueSet.add(element.model);
                 }
-                uniqueSet.add(element.model);
+                const newModel = getString(element);
+                if (limit && (models + newModel).length > limit) break;
+                models += newModel;
+                newData.push(element);
             }
-            const newModel = getString(element);
-            if (limit && (models + newModel).length > limit) break;
-            models += newModel;
-            newData.push(element);
         }
-        const data = models.trim();
+        const data = models.trimEnd();
         setStringData(data);
         setToralLength(data.length + formData.length);
         setData(newData);
