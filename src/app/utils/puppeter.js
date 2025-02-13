@@ -57,6 +57,7 @@ async function getDataZipcom(url) {
     await page.goto(url, { waitUntil: 'networkidle2' });
     const array = await page.evaluate(() => {
         const table = document.querySelector('.product-fullinfo__model-list');
+        if (!table) return;
         const elements = table.getElementsByTagName('a');
         const result = [];
         for (const key in elements) {

@@ -55,8 +55,8 @@ export default function Main() {
                 ' ' +
                 object.model +
                 ' ' +
-                (series ? object.series : '')
-            ).trimEnd() + '\n'
+                (series && object.series ? object.series : '')
+            ).trimEnd() + ',\n'
         );
     }
     function setString(array) {
