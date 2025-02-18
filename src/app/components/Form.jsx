@@ -10,19 +10,15 @@ export default function Form({ defaultData, setFormData }) {
     const [size, setSize] = useState('');
     const [parameters, setParameters] = useState('');
 
-    const splitter = (text, inputSep = ' ', sep = ', ') => {
-        return text.trimEnd().split(inputSep).join(sep);
-    };
-
     const handleChanged = () => {
         let data = '';
         if (name) data += name + '\n\n';
         if (annotation) data += annotation + '\n\n';
         if (brands) {
-            data += `Совместимость с брендом: ${splitter(brands)}\n`;
+            data += `Совместимость с брендом: ${brands}\n`;
         }
-        if (material) data += `Материал: ${splitter(material)}\n`;
-        if (color) data += `Цвет: ${splitter(color)}\n`;
+        if (material) data += `Материал: ${material}\n`;
+        if (color) data += `Цвет: ${color}\n`;
         if (size) {
             data += `Размер: ${size}\n`;
         }
@@ -42,10 +38,13 @@ export default function Form({ defaultData, setFormData }) {
 
     const getBrands = () => {
         const brands = defaultData.reduce((curr, value) => {
-            curr[value.brand] = null;
+            const capitalize =
+                String(value.brand).charAt(0).toUpperCase() +
+                String(value.brand).toLowerCase().slice(1);
+            curr[capitalize] = null;
             return curr;
         }, {});
-        const brandsList = Object.keys(brands).join(' ');
+        const brandsList = Object.keys(brands).join(', ');
         setBrands(brandsList);
     };
 
