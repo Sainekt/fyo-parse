@@ -109,7 +109,7 @@ export default function Main() {
     }, [defaultData, limit, series, unique, prefix, formData]);
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center items-center min-h-screen m-2'>
             <div className='flex flex-col bg-zinc-900 border border-gray-700 text-zinc-200 p-10 rounded-lg min-w-[850px]'>
                 <form>
                     <div className='flex-col m-2'>
@@ -130,7 +130,7 @@ export default function Main() {
                                     setFormError(null);
                                 }}
                                 disabled={loader}
-                                className={`input-field disabled:bg-gray-300 ${
+                                className={`input-field disabled:bg-gray-600 disabled:cursor-not-allowed ${
                                     formError ? 'border-4 border-red-500' : ''
                                 }`}
                                 required={true}
@@ -148,7 +148,7 @@ export default function Main() {
                                 disabled={loader}
                                 className='w-full text-center bg-black p-2 rounded-lg font-semibold
                                     my-2 hover:bg-gray-800 border border-gray-300 duration-200
-                                    disabled:bg-gray-400 '
+                                    disabled:bg-gray-600 disabled:cursor-not-allowed'
                             >
                                 Request Models
                             </button>

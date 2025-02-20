@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .input-field {
-    @apply w-full rounded-lg text-black p-3 font-semibold ;
+    @apply w-full rounded-lg text-gray-200 p-3 font-semibold bg-neutral-800 ;
   }
 
   .loader {
