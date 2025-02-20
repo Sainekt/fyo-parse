@@ -1,132 +1,15 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Занимает всю высоту экрана */
-    margin: 0;
-    background-color: #f8f9fa; /* Цвет фона */
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr); /* 12 колонн */
-    width: 100%;
-    max-width: auto; /* Максимальная ширина контейнера */
-    min-width: 800px ;
-    margin: 0 auto; /* Центрирование контейнера */
-}
+.input-field {
+    @apply w-full rounded-lg text-black p-3 font-semibold ;
+  }
 
-.card {
-    grid-column: 2 / span 10; /* Начинается с 3-й колонки и занимает 8 колонн */
-    padding: 30px; /* Увеличенные отступы внутри карточки */
-    border-radius: 10px; /* Закругленные углы */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Более заметная тень для карточки */
-    background-color: rgb(255, 255, 255); /* Цвет фона карточки */
-    max-height: 90vh;
-    overflow: auto;
-}
-
-/* Дополнительные стили для элементов внутри карточки */
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-.form {
-    margin: 20px 0;
-}
-
-.label {
-    font-weight: bold;
-    margin-bottom: 5px; /* Отступ снизу для меток */
-}
-
-.input {
-    padding: 10px; /* Увеличенный отступ внутри полей ввода */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%; /* Поля ввода занимают всю ширину карточки */
-    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
-    margin-bottom: 15px; /* Отступ снизу для полей ввода */
-}
-.input:disabled {
-    background-color: rgb(209, 209, 209);
-    color: #000000;
-    cursor: not-allowed;
-}
-.input-half {
-    flex: 1; /* Занимает равную долю доступного пространства */
-    margin-right: 10px; /* Отступ справа для разделения */
-}
-
-.input-half:last-child {
-    margin-right: 0; /* Убираем отступ у последнего элемента */
-}
-
-.input-container {
-    display: flex; /* Используем Flexbox для размещения полей ввода */
-    margin-bottom: 15px; /* Отступ снизу для контейнера */
-}
-.input-error {
-    border-color: red; /* Цвет рамки при ошибке */
-}
-
-.error-message {
-    color: red; /* Цвет текста сообщения об ошибке */
-    font-size: 15px;
-    margin-top: -100px;
-}
-
-.button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 100%; /* Кнопки занимают всю ширину карточки */
-}
-.button:disabled {
-    background-color: rgb(209, 209, 209);
-    color: #000000;
-    cursor: not-allowed;
-}
-
-.button-copy {
-    background-color: #28A745;
-}
-.button-copied {
-    background-color: #166e2a;
-}
-
-.table-container {
-    max-height: 300px; /* Максимальная высота контейнера */
-    overflow-y: auto; /* Включаем вертикальную прокрутку */
-    border: 1px solid #ccc; /* Граница вокруг контейнера */
-    border-radius: 5px; /* Закругленные углы */
-    margin-top: 20px; /* Отступ сверху для отделения от других элементов */
-}
-
-table {
-    width: 100%; /* Таблица занимает всю ширину контейнера */
-    border-collapse: collapse; /* Убираем двойные границы */
-}
-
-th, td {
-    padding: 10px; /* Отступы внутри ячеек */
-    text-align: left; /* Выравнивание текста в ячейках */
-    border-bottom: 1px solid #ddd; /* Нижняя граница для ячеек */
-}
-
-th {
-    background-color: #f2f2f2; /* Цвет фона для заголовков */
-}
-
-.loader {
+  .loader {
     width: 30px;
     height: 30px;
-    border: 5px solid #000000;
+    border: 5px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -142,9 +25,3 @@ th {
         transform: rotate(360deg);
     }
 } 
-.loader-container {
-    display: flex; /* Используем Flexbox */
-    justify-content: center; /* Центрируем по горизонтали */
-    height: 100%; /* Занимаем всю высоту карточки */
-}
-

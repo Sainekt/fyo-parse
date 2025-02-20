@@ -109,105 +109,171 @@ export default function Main() {
     }, [defaultData, limit, series, unique, prefix, formData]);
 
     return (
-        <div className='grid-container'>
-            <div className='card'>
-                <form className='form'>
-                    <label htmlFor='url' className='label'>
-                        URL:
-                    </label>{' '}
-                    <input
-                        id='url'
-                        type='text'
-                        onChange={(event) => {
-                            setUrl(event.target.value);
-                            setFormError(null);
-                        }}
-                        disabled={loader}
-                        className={`input ${formError ? 'input-error' : ''}`}
-                        required={true}
-                    />
-                    {formError && (
-                        <span className='error-message'>{formError}</span>
-                    )}
-                    <button
-                        type='submit'
-                        onClick={handleSend}
-                        className='button'
-                        disabled={loader}
-                    >
-                        Request Models
-                    </button>
-                </form>
-                <label htmlFor='series' className='label'>
-                    Series:
-                </label>
-                <input
-                    id='series'
-                    type='checkbox'
-                    onChange={(event) => setSeries(event.target.checked)}
-                />
-                <label htmlFor='unique' className='label'>
-                    Unique:
-                </label>
-                <input
-                    id='unique'
-                    type='checkbox'
-                    checked={unique}
-                    onChange={(event) => setUnique(event.target.checked)}
-                />
-                <label htmlFor='addPrefix' className='label'>
-                    Prefix model list:
-                </label>
-                <input
-                    id='addPrefix'
-                    type='checkbox'
-                    checked={prefix}
-                    onChange={(event) => setPrefix(event.target.checked)}
-                />
-                <label htmlFor='viewForm' className='label'>
-                    View from
-                </label>
-                <input
-                    type='checkbox'
-                    id='viewForm'
-                    checked={viewForm}
-                    onChange={(event) => setViewForm(event.target.checked)}
-                />
-                <br />
-                <p></p>
-                {viewForm ? (
-                    <Form
-                        defaultData={defaultData}
-                        setFormData={setFormData}
-                    ></Form>
-                ) : null}
-
-                <p></p>
-                <label htmlFor='limit' className='label'>
-                    Limit:
-                </label>
-                <input
-                    id='limit'
-                    type='number'
-                    onChange={(event) => setLimit(event.target.value)}
-                    className='input'
-                />
-                {totalLength ? `Total length: ${totalLength}` : null}
-                <button
-                    onClick={handleCopyModels}
-                    className={`button button-copy ${
-                        copy ? 'button-copied' : null
-                    }`}
-                >
-                    {copy ? '✔' : 'Copy'}
-                </button>
-                <Table data={data} series={series} />
-                <p></p>
-                {loader ? (
-                    <div className='loader-container'>
-                        <span className='loader'></span>{' '}
+        <div className='flex justify-center'>
+            <div className='flex flex-col bg-zinc-900 border border-gray-700 text-zinc-200 p-10 rounded-lg min-w-[850px]'>
+                <form>
+                    <div className='flex-col m-2'>
+                        <div>
+                            <label
+                                htmlFor='url'
+                                className='font-semibold text-lg'
+                            >
+                                URL:
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                id='url'
+                                type='text'
+                                onChange={(event) => {
+                                    setUrl(event.target.value);
+                                    setFormError(null);
+                                }}
+                                disabled={loader}
+                                className={`input-field disabled:bg-gray-300 ${
+                                    formError ? 'border-4 border-red-500' : ''
+                                }`}
+                                required={true}
+                            />
+                            {formError && (
+                                <div className='text-red-500 text-center'>
+                                    Error: {formError}
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <button
+                                type='submit'
+                                onClick={handleSend}
+                                disabled={loader}
+                                className='w-full text-center bg-black p-2 rounded-lg font-semibold
+                                    my-2 hover:bg-gray-800 border border-gray-300 duration-200
+                                    disabled:bg-gray-400 '
+                            >
+                                Request Models
+                            </button>
+                        </div>
                     </div>
-                ) : null}
+                </form>
+                <div className='flex justify-evenly'>
+                    <div className='flex-col'>
+                        <div className='flex justify-center bg-black border rounded-md p-1 hover:bg-gray-800 duration-200 mb-2'>
+                            <label
+                                htmlFor='series'
+                                className='font-semibold pr-1 w-full text-center'
+                            >
+                                Series:
+                            </label>
+                            <input
+                                id='series'
+                                type='checkbox'
+                                onChange={(event) =>
+                                    setSeries(event.target.checked)
+                                }
+                            />
+                        </div>
+                        <div className='flex justify-center bg-black border rounded-md p-1 hover:bg-gray-800 duration-200'>
+                            <label
+                                htmlFor='unique'
+                                className='font-semibold pr-1 w-full text-center'
+                            >
+                                Unique:
+                            </label>
+                            <input
+                                id='unique'
+                                type='checkbox'
+                                checked={unique}
+                                onChange={(event) =>
+                                    setUnique(event.target.checked)
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div className='flex-col'>
+                        <div className='flex justify-center bg-black border rounded-md p-1 hover:bg-gray-800 duration-200 mb-2'>
+                            <label
+                                htmlFor='addPrefix'
+                                className='font-semibold pr-1 w-full text-center'
+                            >
+                                Prefix model list:
+                            </label>
+                            <input
+                                id='addPrefix'
+                                type='checkbox'
+                                checked={prefix}
+                                onChange={(event) =>
+                                    setPrefix(event.target.checked)
+                                }
+                            />
+                        </div>
+                        <div className='flex justify-center bg-black border rounded-md p-1 hover:bg-gray-800 duration-200'>
+                            <label
+                                htmlFor='viewForm'
+                                className='font-semibold pr-1 w-full text-center'
+                            >
+                                View from:
+                            </label>
+                            <input
+                                type='checkbox'
+                                id='viewForm'
+                                checked={viewForm}
+                                onChange={(event) =>
+                                    setViewForm(event.target.checked)
+                                }
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className='flex-col'>
+                    <div className='flex justify-center'>
+                        {viewForm ? (
+                            <Form
+                                defaultData={defaultData}
+                                setFormData={setFormData}
+                            ></Form>
+                        ) : null}
+                    </div>
+                    <div>
+                        <label htmlFor='limit' className='font-semibold'>
+                            Limit:
+                        </label>
+                    </div>
+                    <div>
+                        <input
+                            id='limit'
+                            type='number'
+                            onChange={(event) => setLimit(event.target.value)}
+                            className='input-field'
+                        />{' '}
+                    </div>
+                    <div className='flex justify-center bg-black border rounded-md mt-2 p-1'>
+                        <span className='mr-2'>Total length:</span>
+                        {totalLength}
+                    </div>
+                    <div>
+                        <button
+                            onClick={handleCopyModels}
+                            className={`w-full text-center bg-black p-2 rounded-lg font-semibold
+                                    my-2 hover:bg-gray-800 border border-gray-300 duration-200
+                                     ${copy ? 'bg-gray-800' : null}`}
+                        >
+                            {copy ? '✔' : 'Copy'}
+                        </button>
+                    </div>
+                    {defaultData ? (
+                        <div
+                            className='w-full rounded-lg border
+                        border-white h-96 overflow-auto'
+                        >
+                            <Table data={data} series={series} />
+                        </div>
+                    ) : null}
+                    {loader ? (
+                        <div className='flex justify-center mt-7'>
+                            <span className='loader'></span>{' '}
+                        </div>
+                    ) : null}
+                </div>
             </div>
         </div>
     );

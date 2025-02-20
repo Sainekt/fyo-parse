@@ -1,25 +1,36 @@
 export default function Table({ data, series }) {
     if (!data) return;
     return (
-        <div className='table-container'>
-            <table>
-                <thead>
-                    <tr>
-                        <th scope='col'>Brand</th>
-                        <th scope='col'>Model</th>
-                        {series && <th scope='col'>Series</th>}
+        <table className='table-fixed min-w-full text-center'>
+            <thead>
+                <tr className='bg-black'>
+                    <th className='p-3 font-semibold'>Brand</th>
+                    <th className='p-3 font-semibold'>Model</th>
+                    {series && <th className='p-3 font-semibold'>Series</th>}
+                </tr>
+            </thead>
+            <tbody>
+                {data.map((item, index) => (
+                    <tr
+                        key={index}
+                        className={`hover:bg-gray-500 ${
+                            index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-700'
+                        }`}
+                    >
+                        <td className='p-3 border-t border-gray-600'>
+                            {item.brand}
+                        </td>
+                        <td className='p-3 border-t border-gray-600'>
+                            {item.model}
+                        </td>
+                        {series && (
+                            <td className='p-3 border-t border-gray-600'>
+                                {item.series}
+                            </td>
+                        )}
                     </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.brand}</td>
-                            <td>{item.model}</td>
-                            {series && <td>{item.series}</td>}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                ))}
+            </tbody>
+        </table>
     );
 }

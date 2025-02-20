@@ -50,82 +50,132 @@ export default function Form({ defaultData, setFormData }) {
 
     return (
         <>
-            <label htmlFor='Name' className='label'>
-                Name:
-            </label>
-            <input
-                id='Name'
-                type='input'
-                onChange={(event) => setName(event.target.value)}
-                className='input'
-            />
+            <div className='flex'>
+                <div>
+                    <div>
+                        <label htmlFor='Name' className='font-semibold'>
+                            Name:
+                        </label>
+                    </div>
+                    <div>
+                        <input
+                            id='Name'
+                            type='input'
+                            onChange={(event) => setName(event.target.value)}
+                            className='input-field'
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor='Annotation' className='font-semibold'>
+                            Annotation:
+                        </label>
+                    </div>
+                    <div>
+                        <textarea
+                            id='Annotation'
+                            onChange={(event) =>
+                                setAnnotation(event.target.value)
+                            }
+                            className='input-field'
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor='Brands' className='font-semibold'>
+                            Brands:
+                        </label>
+                    </div>
+                    <div>
+                        <input
+                            id='Brands'
+                            type='input'
+                            onChange={(event) => setBrands(event.target.value)}
+                            className='input-field'
+                            value={brands}
+                        />
+                    </div>
+                    <div className='flex justify-evenly'>
+                        <div className='flex-col m-1'>
+                            <div>
+                                <label
+                                    htmlFor='Material'
+                                    className='font-semibold'
+                                >
+                                    Material:
+                                </label>
+                            </div>
+                            <div>
+                                <input
+                                    id='Material'
+                                    type='input'
+                                    onChange={(event) =>
+                                        setMaterial(event.target.value)
+                                    }
+                                    className='input-field'
+                                />
+                            </div>
+                        </div>
 
-            <label htmlFor='Annotation' className='label'>
-                Annotation:
-            </label>
-            <textarea
-                id='Annotation'
-                onChange={(event) => setAnnotation(event.target.value)}
-                className='input'
-            />
-
-            <label htmlFor='Brands' className='label'>
-                Brands:
-            </label>
-            <input
-                id='Brands'
-                type='input'
-                onChange={(event) => setBrands(event.target.value)}
-                className='input'
-                value={brands}
-            />
-
-            <div className='input-container'>
-                <div className='input-half'>
-                    <label htmlFor='Material' className='label'>
-                        Material:
-                    </label>
-                    <input
-                        id='Material'
-                        type='input'
-                        onChange={(event) => setMaterial(event.target.value)}
-                        className='input'
-                    />
-                </div>
-
-                <div className='input-half'>
-                    <label htmlFor='Color' className='label'>
-                        Color:
-                    </label>
-                    <input
-                        id='Color'
-                        type='input'
-                        onChange={(event) => setColor(event.target.value)}
-                        className='input'
-                    />
-                </div>
-                <div className='input-half'>
-                    <label htmlFor='Size' className='label'>
-                        Size:
-                    </label>
-                    <input
-                        id='Size'
-                        type='input'
-                        onChange={(event) => setSize(event.target.value)}
-                        className='input'
-                    />
+                        <div className='flex-col m-1'>
+                            <div>
+                                <label
+                                    htmlFor='Color'
+                                    className='font-semibold'
+                                >
+                                    Color:
+                                </label>
+                            </div>
+                            <div>
+                                <input
+                                    id='Color'
+                                    type='input'
+                                    onChange={(event) =>
+                                        setColor(event.target.value)
+                                    }
+                                    className='input-field'
+                                />
+                            </div>
+                        </div>
+                        <div className='flex-col m-1'>
+                            <div>
+                                <label htmlFor='Size' className='font-semibold'>
+                                    Size:
+                                </label>
+                            </div>
+                            <div>
+                                <input
+                                    id='Size'
+                                    type='input'
+                                    onChange={(event) =>
+                                        setSize(event.target.value)
+                                    }
+                                    className='input-field'
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex-col'>
+                        <div>
+                            <label
+                                htmlFor='parameters'
+                                className='font-semibold'
+                            >
+                                Parameters:
+                            </label>
+                        </div>
+                        <div>
+                            <textarea
+                                className='input-field'
+                                type='text'
+                                id='parameters'
+                                value={parameters}
+                                onChange={(target) =>
+                                    setParameters(target.target.value)
+                                }
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
-            <label htmlFor='parameters' className='label'>
-                Parameters:
-            </label>
-            <textarea
-                className='input'
-                type='text'
-                id='parameters'
-                value={parameters}
-                onChange={(target) => setParameters(target.target.value)}
-            />
         </>
     );
 }
