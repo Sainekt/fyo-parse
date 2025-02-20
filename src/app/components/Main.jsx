@@ -146,7 +146,7 @@ export default function Main() {
                                 type='submit'
                                 onClick={handleSend}
                                 disabled={loader}
-                                className='w-full text-center bg-black p-2 rounded-lg font-semibold
+                                className='w-full text-center bg-black p-3 rounded-lg font-semibold
                                     my-2 hover:bg-gray-800 border border-gray-300 duration-200
                                     disabled:bg-gray-600 disabled:cursor-not-allowed'
                             >
@@ -246,14 +246,14 @@ export default function Main() {
                             className='input-field'
                         />{' '}
                     </div>
-                    <div className='flex justify-center bg-black border rounded-md mt-2 p-1'>
+                    <div className='flex justify-center bg-neutral-900 border rounded-md mt-2 p-1'>
                         <span className='mr-2'>Total length:</span>
                         {totalLength}
                     </div>
                     <div>
                         <button
                             onClick={handleCopyModels}
-                            className={`w-full text-center bg-black p-2 rounded-lg font-semibold
+                            className={`w-full text-center bg-black p-3 rounded-lg font-semibold
                                     my-2 hover:bg-gray-800 border border-gray-300 duration-200
                                      ${copy ? 'bg-gray-800' : null}`}
                         >
