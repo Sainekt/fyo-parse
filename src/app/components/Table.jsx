@@ -3,7 +3,7 @@ export default function Table({ data, series }) {
     return (
         <table className='table-fixed min-w-full text-center'>
             <thead>
-                <tr className='bg-black'>
+                <tr className='bg-gray-700'>
                     <th className='p-3 font-semibold'>Brand</th>
                     <th className='p-3 font-semibold'>Model</th>
                     {series && <th className='p-3 font-semibold'>Series</th>}

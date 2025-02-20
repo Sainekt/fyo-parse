@@ -147,7 +147,7 @@ export default function Main() {
                                 onClick={handleSend}
                                 disabled={loader}
                                 className='w-full text-center bg-black p-3 rounded-lg font-semibold
-                                    my-2 hover:bg-gray-800 border border-gray-300 duration-200
+                                    mt-3 hover:bg-gray-800 border border-gray-300 duration-200
                                     disabled:bg-gray-600 disabled:cursor-not-allowed'
                             >
                                 Request Models
@@ -247,14 +247,22 @@ export default function Main() {
                         />{' '}
                     </div>
                     <div className='flex justify-center bg-neutral-900 border rounded-md mt-2 p-1'>
-                        <span className='mr-2'>Total length:</span>
-                        {totalLength}
+                        <span className='mr-2 font-bold'>Total length:</span>
+                        <span
+                            className={
+                                totalLength > 6000
+                                    ? 'text-red-500'
+                                    : 'text-green-500'
+                            }
+                        >
+                            {totalLength}
+                        </span>
                     </div>
                     <div>
                         <button
                             onClick={handleCopyModels}
                             className={`w-full text-center bg-black p-3 rounded-lg font-semibold
-                                    my-2 hover:bg-gray-800 border border-gray-300 duration-200
+                                    my-3 hover:bg-gray-800 border border-gray-300 duration-200
                                      ${copy ? 'bg-gray-800' : null}`}
                         >
                             {copy ? '✔' : 'Copy'}
