@@ -1,3 +1,9 @@
+A project for working with marketplace cards. 
+It allows you to create annotations in the style that my company adheres to. 
+Implemented link support:
+- Fiyo
+- Zipcom
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
