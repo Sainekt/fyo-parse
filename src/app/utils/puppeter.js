@@ -9,7 +9,8 @@ export async function handler(url) {
         return { status: 400, data: null };
     }
     if (DOMAINS[domain] === 'fiyo.de') return await getDataFiyo(url);
-    if (DOMAINS[domain] === 'zipcom.ru') return await getDataZipcom(url);
+    else if (DOMAINS[domain] === 'zipcom.ru') return await getDataZipcom(url);
+    else if (DOMAINS[domain] === 'fixzip.ru') return await getDataFixzip(url);
 }
 
 const urlPattern = /^(?:https?:\/\/)?(?:www\.)?([^\/]+)/;
@@ -18,6 +19,8 @@ function extractDomain(url) {
     const match = url.match(urlPattern);
     return match ? match[1] : null;
 }
+
+// =================== Fiyo ===================
 
 async function getDataFiyo(url) {
     const page = await browser.newPage();
@@ -51,6 +54,8 @@ async function parseDataFiyo(data) {
     return result;
 }
 
+// =================== Zipcom ===================
+
 async function getDataZipcom(url) {
     const page = await browser.newPage();
 
@@ -67,7 +72,7 @@ async function getDataZipcom(url) {
         return result;
     });
     await page.close();
-    if (!array) return { status: 404, data: null };
+    if (!array || !array.length) return { status: 404, data: null };
     const data = await parserZipComData(array);
     return { status: 200, data: data };
 }
@@ -79,6 +84,33 @@ async function parserZipComData(data) {
         const [brand, model, series] = element.split(' ');
         const obj = { brand, model, series };
         result.push(obj);
+    }
+    return result;
+}
+
+// =================== fixzip ===================
+async function getDataFixzip(url) {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    const array = await page.evaluate(() => {
+        const table = document.querySelector('.device-model-wrapper');
+        const a = table.querySelectorAll('a');
+        const result = [];
+        a.forEach((a) => result.push(a.getAttribute('title')));
+        return result;
+    });
+    page.close();
+    if (!array || !array.length) return { status: 404, data: null };
+    const data = await parserFixZip(array);
+    return { status: 200, data: data };
+}
+
+async function parserFixZip(data) {
+    const result = [];
+    for (const element of data) {
+        if (!element) continue;
+        const [_, __, brand, model] = element.split(' ');
+        result.push({ brand, model });
     }
     return result;
 }
