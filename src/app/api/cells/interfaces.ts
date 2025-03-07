@@ -24,6 +24,7 @@ export interface ResultObject {
     clear: { name: null; cell: string; stock: null; code: null }[];
     empty: { name: string; cell: string; stock: number; code: string }[];
     countGoods: number;
+    includeSet: Array<string>;
 }
 export interface Attribute {
     id: string;
@@ -38,4 +39,9 @@ export interface DataObj {
         attributes: Attribute[];
         code: string;
     }>;
+}
+
+export interface allCells {
+    allExistsCell: Set<string>;
+    includesCell: Set<string>;
 }

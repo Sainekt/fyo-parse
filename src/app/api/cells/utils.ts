@@ -1,14 +1,17 @@
 import fs from 'fs';
-import { DataObj, ResultObject, Attribute, Result } from './interfaces';
+import { DataObj, ResultObject, Attribute, allCells } from './interfaces';
 const CELL_ID = '17bbadc0-786b-11ec-0a80-06bd004b0ee2';
 
 export async function getData(data: DataObj): Promise<ResultObject> {
-    const allCells = await allExistsCells();
+    const allCellsObj = await allExistsCells();
+    const allCells = allCellsObj.allExistsCell;
+    const includesCell = allCellsObj.includesCell;
     const result: ResultObject = {
         dublicate: [],
         clear: [],
         empty: [],
         countGoods: data.rows.length,
+        includeSet: [...includesCell],
     };
     const unique = new Set<string>();
     for (const product of data.rows) {
@@ -73,13 +76,17 @@ function* getAllCells(includeSet: Set<string>) {
     }
 }
 
-async function allExistsCells(): Promise<Set<string>> {
-    const result: Set<string> = new Set();
+async function allExistsCells(): Promise<allCells> {
+    const result: allCells = {
+        allExistsCell: new Set(),
+        includesCell: new Set(),
+    };
     try {
         const fileData = fs.readFileSync('./include_cells.txt', 'utf8');
         const includeSet = new Set(fileData.split('\r\n'));
+        result.includesCell = includeSet;
         for (const cell of getAllCells(includeSet)) {
-            result.add(cell);
+            result.allExistsCell.add(cell);
         }
     } catch (error) {
         console.error('includes file error:', error);

@@ -18,6 +18,7 @@ export default function CellsChecker() {
                 response.json().then((data) => {
                     setData(data);
                     setError(null);
+                    console.log(data);
                 });
             } else {
                 response.json().then((data) => {
