@@ -1,5 +1,11 @@
 import fs from 'fs';
-import { DataObj, ResultObject, Attribute, allCells } from './interfaces';
+import {
+    DataObj,
+    ResultObject,
+    Attribute,
+    allCells,
+    ExcludeCells,
+} from './interfaces';
 const CELL_ID = '17bbadc0-786b-11ec-0a80-06bd004b0ee2';
 
 export async function getData(data: DataObj): Promise<ResultObject> {
@@ -82,7 +88,8 @@ async function allExistsCells(): Promise<allCells> {
         includesCell: new Set(),
     };
     try {
-        const fileData = fs.readFileSync('./include_cells.txt', 'utf8');
+        // file.txt must be separation by CRLF format.
+        const fileData = fs.readFileSync('./excluded_cells.txt', 'utf8');
         const includeSet = new Set(fileData.split('\r\n'));
         result.includesCell = includeSet;
         for (const cell of getAllCells(includeSet)) {
@@ -92,4 +99,39 @@ async function allExistsCells(): Promise<allCells> {
         console.error('includes file error:', error);
     }
     return result;
+}
+
+export async function getExcludeCells(): Promise<ExcludeCells> {
+    try {
+        const fileData = fs.readFileSync('./excluded_cells.txt', 'utf8');
+        const excludeSet = new Set(fileData.split('\r\n'));
+        return { data: [...excludeSet], error: null };
+    } catch (error) {
+        console.error(error);
+        return { data: null, error: 'failed read eclude_cells.txt file' };
+    }
+}
+
+export function addExcludeCell(cell: string): boolean {
+    try {
+        fs.appendFileSync('./excluded_cells.txt', `${cell}\r\n`);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
+export function removeExcludeCell(cell: string): boolean {
+    try {
+        const fileData = fs.readFileSync('./excluded_cells.txt', 'utf8');
+        const lines = fileData
+            .split('\r\n')
+            .filter((line) => line.trim() !== cell);
+        fs.writeFileSync('./excluded_cells.txt', lines.join('\r\n'));
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }

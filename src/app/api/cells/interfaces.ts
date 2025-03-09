@@ -45,3 +45,8 @@ export interface allCells {
     allExistsCell: Set<string>;
     includesCell: Set<string>;
 }
+
+export interface ExcludeCells {
+    data: Array<string> | null;
+    error: string | null;
+}

@@ -1,7 +1,7 @@
 'use server';
 import { HEADERS_DEFAULT } from '../../utils/constants';
 import { getData } from './utils';
-import { Result, ApiResponse, ResultObject, DataObj } from './interfaces';
+import { ApiResponse, ResultObject, DataObj } from './interfaces';
 
 const TOKEN: string | undefined = process.env.MS_TOKEN;
 const HEADERS_FOR_MS = {

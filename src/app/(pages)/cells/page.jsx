@@ -1,12 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 import TableCell from '../../components/TableCells';
+import IncludeView from '../../components/ExcludeCells';
 
 export default function CellsChecker() {
     const [update, setUpdate] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loader, setLoader] = useState(false);
+    const [includeView, setIncludeView] = useState(false);
 
     useEffect(() => {
         if (!update) return;
@@ -32,6 +34,19 @@ export default function CellsChecker() {
     return (
         <div className='flex justify-center items-center min-h-screen m-2'>
             <div className='flex flex-col bg-zinc-900 border border-gray-700 text-zinc-200 p-10 rounded-lg min-w-[850px]'>
+                <div className='flex justify-between items-center'>
+                    <button
+                        className='w-full text-center bg-black p-3 rounded-lg font-semibold
+                        m-3 hover:bg-gray-800 border border-gray-300 duration-200
+                        disabled:bg-gray-600 disabled:cursor-not-allowed'
+                        onClick={() => setIncludeView(!includeView)}
+                    >
+                        {includeView
+                            ? 'Скрыть исключенные ячейки'
+                            : 'Показать исключенные ячейки'}
+                    </button>
+                </div>
+                {includeView ? <IncludeView /> : null}
                 {error && (
                     <div className='bg-black p-2 rounded-lg border border-red-600 text-center text-red-500 font-bold'>
                         Ошибка при получении данных: {error}
